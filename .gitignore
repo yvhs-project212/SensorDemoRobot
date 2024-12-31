@@ -169,3 +169,32 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+# temporary backup files
+# emacs
+*~
+# vi
+\#*
+
+# Just clone swervepy repo, don't track it in Git
+cloned-swervepy/
+
+# Python venv artifacts
+bin/
+include/
+lib/
+lib64
+pyvenv.cfg
+Include/
+Scripts/
+
+
+# RobotPy installation and simulation artifacts
+.installer_config
+networktables.json
+simgui-ds.json
+simgui-window.json
+simgui.json
+code/.deploy_cfg
+
+
