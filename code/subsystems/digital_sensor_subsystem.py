@@ -1,7 +1,7 @@
 import wpilib
 import commands2
 from constants import ELEC
-from p212 import DigitalSensor
+from libraries.p212 import DigitalSensor
 
 
 class DigitalSensorSS(commands2.Subsystem):
@@ -48,4 +48,4 @@ class DigitalSensorSS(commands2.Subsystem):
         """
         if wpilib.RobotState.isEnabled():
             data_field_name = f"{self.switch.name} (#{self.switch.io_port})"
-            wpilib.SmartDashboard.putData(data_field_name, self.switch)
+            wpilib.SmartDashboard.putData(data_field_name, self.switch.sensor)

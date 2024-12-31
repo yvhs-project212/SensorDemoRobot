@@ -30,5 +30,9 @@ class RobotContainer:
         self.hall_eff = DigitalSensorSS(ELEC.hall_eff_DIO, "Hall Effect")
         self.ir = DigitalSensorSS(ELEC.IR_sensor_DIO, "IR Proximity Sensor")
 
+
+    def getAutonomousCommand(self):
+        return None
+
     # No other code is needed!  Each subsystem updates the Smart Dashboard via
     # its periodic() method as long as the robot is enabled.
