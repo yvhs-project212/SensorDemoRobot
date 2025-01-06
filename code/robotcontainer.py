@@ -8,6 +8,7 @@ import commands2
 
 from constants import ELEC
 from subsystems.digital_sensor_subsystem import DigitalSensorSS
+from subsystems.analog_sensor_subsystem import AnalogSensorSS
 
 
 class RobotContainer:
@@ -25,10 +26,13 @@ class RobotContainer:
         and commands.
         """
         # The robot's subsystems
-        self.limit_sw = DigitalSensorSS(ELEC.limit_sw_DIO, "Limit Switch")
+        self.limit_sw = DigitalSensorSS(ELEC.limit_sw_DIO, "Limit Switch", invert=True)
         self.beam_break = DigitalSensorSS(ELEC.beam_break_DIO, "Beam Break")
-        self.hall_eff = DigitalSensorSS(ELEC.hall_eff_DIO, "Hall Effect")
-        self.ir = DigitalSensorSS(ELEC.IR_sensor_DIO, "IR Proximity Sensor")
+        self.hall_eff = DigitalSensorSS(ELEC.hall_eff_DIO, "Hall Effect", invert=True)
+        #self.ir = DigitalSensorSS(ELEC.IR_sensor_DIO, "IR Proximity Sensor")
+
+        us_max_range = 512.0 / 2.54  # ultrasonic sensor max range: 512 cm
+        self.ultra = AnalogSensorSS(ELEC.ultrasonic_sensor_AIO, "Ultrasonic range finder", low=0.0, high=us_max_range, round=1)
 
 
     def getAutonomousCommand(self):

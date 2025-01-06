@@ -1,10 +1,11 @@
 import wpilib
-import commands2
-from constants import ELEC
-from libraries.p212 import DigitalSensor
+import libraries.p212
+from subsystems.sensor_subsystem import SensorSS
 
+import logging
+logger = logging.getLogger("DigitalSensorSS")
 
-class DigitalSensorSS(commands2.Subsystem):
+class DigitalSensorSS(SensorSS):
     """
     The sensor demo includes several simple digital sensors which all behave
     similarly.
@@ -22,30 +23,6 @@ class DigitalSensorSS(commands2.Subsystem):
     them all.  The sensors are only distinguished by which DIO port they are
     plugged into (and by their names).
     """
-    def __init__(self, dio_port, sensor_name, invert=False) -> None:
-        """
-        Creates a new DigitalSensorSS.
 
-        Parameters: see the DigitalSensor class in the p212.py library.
-        """
-        super().__init__()
-        self.switch = DigitalSensor(dio_port, sensor_name, invert=invert)
-
-    def activated(self):
-        """
-        Return True if the digital sensor is activated, False if not.
-
-        This method passes the call through to the underlying sensor's value()
-        method, so it honors the :invert: setting.
-        """
-        return self.switch.value()
-
-    def periodic(self):
-        """
-        Update the SmartDashboard if the robot is enabled.
-
-        All DigitalSensorSSes will log their data on WPILib's SmartDashboard.
-        """
-        if wpilib.RobotState.isEnabled():
-            data_field_name = f"{self.switch.name} (#{self.switch.io_port})"
-            wpilib.SmartDashboard.putData(data_field_name, self.switch.sensor)
+    SENSOR_CLASS = libraries.p212.DigitalSensor
+    SMARTDASHBOARD_PUT_METHOD = wpilib.SmartDashboard.putBoolean

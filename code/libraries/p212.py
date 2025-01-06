@@ -7,10 +7,10 @@ class Sensor:
   This class represents a simple digital or analog sensor, plugged into one
   of the RoboRIO's DIO or AIO ports respectively.
   """
-  # SENSOR_CLASS must be a Sendable, since we call SmartDashboard.putData()
+  # HARDWARE_CLASS must be a Sendable, since we call SmartDashboard.putData()
   # with it.
   #
-  SENSOR_CLASS = None
+  HARDWARE_CLASS = None
 
   def __init__(self, io_port, name) -> None:
     """
@@ -19,7 +19,7 @@ class Sensor:
     """
     super().__init__()
     self.io_port = io_port
-    self.sensor = self.SENSOR_CLASS(io_port)
+    self.hardware_sensor = self.HARDWARE_CLASS(io_port)
     self.name = name
 
   def initSendable(self, builder: SendableBuilder) -> None:
@@ -41,7 +41,7 @@ class DigitalSensor(Sensor):
     * Hall Effect sensors
     * break-beam sensors
   """
-  SENSOR_CLASS = wpilib.DigitalInput
+  HARDWARE_CLASS = wpilib.DigitalInput
 
   def __init__(self, dio_port, name, invert=False) -> None:
     """
@@ -61,7 +61,10 @@ class DigitalSensor(Sensor):
     Return the (boolean) logical value of this sensor, taking into account
     the invert setting.
     """
-    return (not self.sensor.get()) if self.invert else (self.sensor.get())
+    if self.invert:
+      return (not self.hardware_sensor.get())
+    else:
+      return self.hardware_sensor.get()
 
 
 class AnalogSensor(Sensor):
@@ -73,7 +76,7 @@ class AnalogSensor(Sensor):
   include:
     * ultrasonic sensors
   """
-  SENSOR_CLASS = wpilib.AnalogInput
+  HARDWARE_CLASS = wpilib.AnalogInput
   def __init__(self, aio_port, name, low=0.0, high=1.0, round=None) -> None:
     """
     Create a new AnalogSensor.
@@ -101,7 +104,7 @@ class AnalogSensor(Sensor):
     Return the raw sensor reading, not adjusted for battery voltage sag and
     not scaled to the requested range (:low: to :high:).
     """
-    return self.sensor.getVoltage()
+    return self.hardware_sensor.getVoltage()
 
   def battery_adjusted_value(self):
     """
