@@ -32,6 +32,7 @@ elec_data = {
     "hall_eff_DIO": 2,
     "IR_sensor_DIO": 3,
     "ultrasonic_sensor_AIO": 0,
+    "talonfx_CAN_ID": 33,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 

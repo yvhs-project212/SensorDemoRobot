@@ -131,3 +131,41 @@ class AnalogSensor(Sensor):
         tempval = int(tempval * 10**self.round) / 10**self.round
     return tempval
 
+
+class TalonFXEncoderSensor(Sensor):
+  """
+  This class represents a subsystem consisting of a TalonFX encoder, coming
+  from a Kraken (or Falcon 500) motor with a specific CAN bus ID.
+  """
+  HARDWARE_CLASS = wpilib.TalonFX
+
+  def __init__(self, can_id, name) -> None:
+    """
+    Create a new DigitalSensor.
+
+    Parameters:
+     dio_port (int): the RoboRIO Digital I/O port where the sensor is found
+     name (str): a label identifying this sensor
+     invert (boolean): whether to invert the logic sense of the sensor, i.e.
+       True if 5V on the DIO port means a sensor value of False.
+    """
+    super().__init__(can_id, name)
+    self.errors_logged = {}
+
+  def value(self):
+    """
+    Return the value of the encoder.
+    """
+    for method in (
+        "getPosition", "getRotorPosition", "getSelectedSensorPosition",
+        ):
+        try:
+            reader_method = getattr(self.hardware_sensor, method)
+            reading = reader_method()
+            return reading
+        except:
+            if method not in self.errors_logged:
+              logger.log(f"{method} failed")
+              self.errors_logged[method] = 1
+    return None
+

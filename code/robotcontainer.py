@@ -9,6 +9,7 @@ import commands2
 from constants import ELEC
 from subsystems.digital_sensor_subsystem import DigitalSensorSS
 from subsystems.analog_sensor_subsystem import AnalogSensorSS
+from subsystems.talonfx_encoder_subsystem import TalonFXEncoderrSS
 
 
 class RobotContainer:
@@ -34,6 +35,7 @@ class RobotContainer:
         us_max_range = 512.0 / 2.54  # ultrasonic sensor max range: 512 cm
         self.ultra = AnalogSensorSS(ELEC.ultrasonic_sensor_AIO, "Ultrasonic range finder", low=0.0, high=us_max_range, round=1)
 
+        self.encoder = TalonFXEncoderrSS(ELEC.talonfx_CAN_ID, "TalonFX encoder")
 
     def getAutonomousCommand(self):
         return None
