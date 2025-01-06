@@ -14,7 +14,6 @@ This file defines constants related to your robot.  These constants include:
 
 import math
 from collections import namedtuple
-import rev
 
 # Physical constants, e.g. wheel circumference, physical dimensions
 phys_data = {
@@ -28,10 +27,11 @@ MECH = namedtuple("Data", mech_data.keys())(**mech_data)
 
 # Electrical constants, e.g. current limits, CAN bus IDs, RoboRIO port numbers
 elec_data = {
-    "limit_sw_DIO": 1,
-    "beam_break_DIO": 2,
-    "hall_eff_DIO": 3,
-    "IR_sensor_DIO": 4,
+    "limit_sw_DIO": 0,
+    "beam_break_DIO": 1,
+    "hall_eff_DIO": 2,
+    "IR_sensor_DIO": 3,
+    "ultrasonic_sensor_AIO": 0,
 }
 ELEC = namedtuple("Data", elec_data.keys())(**elec_data)
 
